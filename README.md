@@ -1,492 +1,389 @@
-# \# NOTAM - Sistema de Avisos a Navegantes
+# NOTAM - Sistema de Avisos a Navegantes
 
-# 
+[![NOTAM Version](https://img.shields.io/badge/NOTAM-v2.0-blue.svg)](https://github.com/isidororeyes/NOTAM)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/python-3.8%2B-blue.svg)](https://python.org)
+[![Status](https://img.shields.io/badge/status-en%20desarrollo-orange.svg)](https://github.com/isidororeyes/NOTAM)
 
-# !\[NOTAM Logo](https://img.shields.io/badge/NOTAM-v2.0-blue.svg)
+## ?? Descripci®Æn
 
-# !\[License](https://img.shields.io/badge/license-MIT-green.svg)
+NOTAM (Notice to Airmen) es un sistema para la gesti®Æn y procesamiento de avisos a navegantes a®¶reos. Este proyecto proporciona herramientas para el manejo, an®¢lisis y distribuci®Æn de informaci®Æn NOTAM cr®™tica para la aviaci®Æn civil.
 
-# !\[Status](https://img.shields.io/badge/status-en%20desarrollo-orange.svg)
+## ? Caracter®™sticas Principales
 
-# 
+- ? **Procesamiento de mensajes NOTAM** - Analiza NOTAMs en formato ICAO est®¢ndar
+- ? **Validaci®Æn de formato** - Verifica sintaxis y estructura seg®≤n normas internacionales
+- ? **An®¢lisis de datos aeron®¢uticos** - Extrae informaci®Æn de aeropuertos, pistas y servicios
+- ? **Interfaz de usuario intuitiva** - F®¢cil de usar para profesionales de aviaci®Æn
+- ? **Exportaci®Æn de reportes** - Genera reportes en PDF, Excel y JSON
+- ? **API REST** - Integraci®Æn con sistemas externos
+- ? **B®≤squeda avanzada** - Filtros por fecha, aeropuerto, tipo de NOTAM
 
-# \## üìã Descripci√≥n
+## ?? Instalaci®Æn R®¢pida
 
-# 
+### Requisitos del Sistema
+- **Python 3.8 o superior**
+- **Windows 10/11, macOS 10.14+, o Linux Ubuntu 18.04+**
+- **4 GB RAM** (recomendado 8 GB)
+- **2 GB espacio libre en disco**
 
-# NOTAM (Notice to Airmen) es un sistema para la gesti√≥n y procesamiento de avisos a navegantes a√©reos. Este proyecto proporciona herramientas para el manejo, an√°lisis y distribuci√≥n de informaci√≥n NOTAM cr√≠tica para la aviaci√≥n.
+### Instalaci®Æn Paso a Paso
 
-# 
+1. **Clonar el repositorio:**
+```bash
+git clone https://github.com/isidororeyes/NOTAM.git
+cd NOTAM
+```
 
-# \## üöÄ Caracter√≠sticas
+2. **Crear entorno virtual:**
+```bash
+python -m venv venv
+```
 
-# 
+3. **Activar entorno virtual:**
+```bash
+# Windows:
+venv\Scripts\activate
 
-# \- ‚úÖ Procesamiento de mensajes NOTAM
+# macOS/Linux:
+source venv/bin/activate
+```
 
-# \- ‚úÖ Validaci√≥n de formato ICAO
+4. **Instalar dependencias:**
+```bash
+pip install -r requirements.txt
+```
 
-# \- ‚úÖ An√°lisis de datos aeron√°uticos
+5. **Configurar variables de entorno:**
+```bash
+# Copiar archivo de ejemplo
+copy .env.example .env
 
-# \- ‚úÖ Interfaz de usuario intuitiva
+# Editar .env con tus configuraciones
+notepad .env
+```
 
-# \- ‚úÖ Exportaci√≥n de reportes
+6. **Ejecutar la aplicaci®Æn:**
+```bash
+python src/main/app.py
+```
 
-# \- ‚úÖ Integraci√≥n con sistemas externos
+## ??? C®Æmo Usar el Programa
 
-# 
+### Uso B®¢sico - L®™nea de Comandos
 
-# \## üìÅ Estructura del Proyecto
+#### 1. Procesar un archivo NOTAM individual
 
-# 
+```bash
+# Analizar un archivo NOTAM
+python src/main/app.py --file "ruta/al/archivo.notam"
 
-# ```
+# Ejemplo:
+python src/main/app.py --file "data/samples/example_notam.txt"
+```
 
-# NOTAM/
+#### 2. Procesar m®≤ltiples archivos
 
-# ‚îú‚îÄ‚îÄ src/                    # C√≥digo fuente principal
+```bash
+# Procesar todos los archivos de un directorio
+python src/main/app.py --directory "ruta/al/directorio"
 
-# ‚îÇ   ‚îú‚îÄ‚îÄ main/              # Aplicaci√≥n principal
+# Ejemplo:
+python src/main/app.py --directory "data/samples/"
+```
 
-# ‚îÇ   ‚îú‚îÄ‚îÄ utils/             # Utilidades y helpers
+#### 3. Generar reporte completo
 
-# ‚îÇ   ‚îú‚îÄ‚îÄ parsers/           # Analizadores NOTAM
+```bash
+# Generar reporte en PDF
+python src/main/app.py --file "archivo.notam" --report --format pdf
 
-# ‚îÇ   ‚îî‚îÄ‚îÄ validators/        # Validadores de formato
+# Generar reporte en Excel
+python src/main/app.py --file "archivo.notam" --report --format xlsx
 
-# ‚îú‚îÄ‚îÄ docs/                  # Documentaci√≥n
+# Generar reporte en JSON
+python src/main/app.py --file "archivo.notam" --report --format json
+```
 
-# ‚îÇ   ‚îú‚îÄ‚îÄ api/               # Documentaci√≥n API
+#### 4. Validar formato NOTAM
 
-# ‚îÇ   ‚îú‚îÄ‚îÄ user-guide/        # Gu√≠a de usuario
+```bash
+# Solo validar sin procesar
+python src/validators/notam_validator.py --file "archivo.notam"
 
-# ‚îÇ   ‚îî‚îÄ‚îÄ technical/         # Documentaci√≥n t√©cnica
+# Validar con reporte detallado
+python src/validators/notam_validator.py --file "archivo.notam" --verbose
+```
 
-# ‚îú‚îÄ‚îÄ tests/                 # Pruebas unitarias
+#### 5. Opciones avanzadas
 
-# ‚îú‚îÄ‚îÄ config/                # Archivos de configuraci√≥n
+```bash
+# Procesar con filtros espec®™ficos
+python src/main/app.py --file "archivo.notam" --airport LEMD --date-from 2024-01-01
 
-# ‚îú‚îÄ‚îÄ data/                  # Datos de ejemplo
+# Procesar en modo estricto
+python src/main/app.py --file "archivo.notam" --strict-mode
 
-# ‚îî‚îÄ‚îÄ scripts/               # Scripts de automatizaci√≥n
+# Procesar con salida personalizada
+python src/main/app.py --file "archivo.notam" --output "mi_reporte.json"
+```
 
-# ```
+### Uso Avanzado - Interfaz Gr®¢fica
 
-# 
+#### 1. Iniciar la interfaz gr®¢fica
 
-# \## üõ†Ô∏è Requisitos del Sistema
+```bash
+python src/ui/main_window.py
+```
 
-# 
+#### 2. Pasos en la interfaz:
 
-# \### Requisitos M√≠nimos
+1. **Cargar archivo NOTAM:**
+   - Clic en "Abrir Archivo"
+   - Seleccionar archivo .notam o .txt
+   - El contenido se mostrar®¢ en el panel principal
 
-# \- \*\*Sistema Operativo:\*\* Windows 10/11, macOS 10.14+, Linux Ubuntu 18.04+
+2. **Configurar opciones:**
+   - Seleccionar modo de validaci®Æn (estricto/flexible)
+   - Elegir formato de salida
+   - Configurar filtros si es necesario
+
+3. **Procesar:**
+   - Clic en "Procesar NOTAM"
+   - Ver resultados en tiempo real
+   - Revisar errores y advertencias
 
-# \- \*\*Memoria RAM:\*\* 4 GB m√≠nimo, 8 GB recomendado
-
-# \- \*\*Espacio en disco:\*\* 2 GB disponibles
-
-# \- \*\*Conexi√≥n a internet:\*\* Para actualizaciones NOTAM
-
-# 
-
-# \### Dependencias de Software
-
-# \- Python 3.8+ (si aplica)
-
-# \- Node.js 14+ (si aplica)
-
-# \- Java 8+ (si aplica)
-
-# \- Base de datos SQLite/PostgreSQL
-
-# 
-
-# \## üì¶ Instalaci√≥n
-
-# 
-
-# \### Opci√≥n 1: Instalaci√≥n desde c√≥digo fuente
-
-# 
-
-# ```bash
-
-# \# 1. Clonar el repositorio
-
-# git clone https://github.com/isidororeyes/NOTAM.git
-
-# 
-
-# \# 2. Navegar al directorio
-
-# cd NOTAM
-
-# 
-
-# \# 3. Instalar dependencias
-
-# \# Para Python:
-
-# pip install -r requirements.txt
-
-# 
-
-# \# Para Node.js:
-
-# npm install
-
-# 
-
-# \# Para Java:
-
-# mvn install
-
-# ```
-
-# 
-
-# \### Opci√≥n 2: Instalaci√≥n usando Docker
-
-# 
-
-# ```bash
-
-# \# Construir la imagen
-
-# docker build -t notam-system .
-
-# 
-
-# \# Ejecutar el contenedor
-
-# docker run -p 8080:8080 notam-system
-
-# ```
-
-# 
-
-# \## üöÄ Uso R√°pido
-
-# 
-
-# \### Iniciar la aplicaci√≥n
-
-# 
-
-# ```bash
-
-# \# M√©todo 1: Ejecutar directamente
-
-# python src/main.py
-
-# 
-
-# \# M√©todo 2: Usar scripts
-
-# ./scripts/start.sh
-
-# 
-
-# \# M√©todo 3: Docker
-
-# docker-compose up
-
-# ```
-
-# 
-
-# \### Ejemplos de uso
-
-# 
-
-# ```bash
-
-# \# Procesar un archivo NOTAM
-
-# python src/main.py --input data/example.notam --output results/
-
-# 
-
-# \# Validar formato NOTAM
-
-# python src/validators/notam\_validator.py --file data/test.notam
-
-# 
-
-# \# Generar reporte
-
-# python src/main.py --report --date 2024-01-01
-
-# ```
-
-# 
-
-# \## üìñ Documentaci√≥n
-
-# 
-
-# \### Gu√≠as de Usuario
-
-# \- \[üöÄ Gu√≠a de Inicio R√°pido](docs/user-guide/quick-start.md)
-
-# \- \[üìã Manual de Usuario](docs/user-guide/user-manual.md)
-
-# \- \[‚ùì Preguntas Frecuentes](docs/user-guide/faq.md)
-
-# 
-
-# \### Documentaci√≥n T√©cnica
-
-# \- \[üèóÔ∏è Arquitectura del Sistema](docs/technical/architecture.md)
-
-# \- \[üîß API Reference](docs/api/README.md)
-
-# \- \[üß™ Gu√≠a de Testing](docs/technical/testing.md)
-
-# 
-
-# \## üß™ Pruebas
-
-# 
-
-# ```bash
-
-# \# Ejecutar todas las pruebas
-
-# python -m pytest tests/
-
-# 
-
-# \# Ejecutar pruebas espec√≠ficas
-
-# python -m pytest tests/test\_notam\_parser.py
-
-# 
-
-# \# Ejecutar con cobertura
-
-# python -m pytest --cov=src tests/
-
-# ```
-
-# 
-
-# \## üìä Rendimiento
-
-# 
-
-# | M√©trica | Valor |
-
-# |---------|-------|
-
-# | Tiempo de procesamiento | ~2ms por NOTAM |
-
-# | Memoria utilizada | ~100MB |
-
-# | Precisi√≥n de parsing | 99.8% |
-
-# | Formatos soportados | ICAO, FAA, EUROCONTROL |
-
-# 
-
-# \## üîß Configuraci√≥n
-
-# 
-
-# \### Archivo de configuraci√≥n principal
-
-# 
-
-# ```json
-
-# {
-
-# &nbsp; "database": {
-
-# &nbsp;   "type": "sqlite",
-
-# &nbsp;   "path": "data/notam.db"
-
-# &nbsp; },
-
-# &nbsp; "parser": {
-
-# &nbsp;   "strict\_mode": true,
-
-# &nbsp;   "validate\_dates": true
-
-# &nbsp; },
-
-# &nbsp; "output": {
-
-# &nbsp;   "format": "json",
-
-# &nbsp;   "pretty\_print": true
-
-# &nbsp; }
-
-# }
-
-# ```
-
-# 
-
-# \### Variables de entorno
-
-# 
-
-# ```bash
-
-# \# Configurar en .env
-
-# NOTAM\_DB\_PATH=./data/notam.db
-
-# NOTAM\_LOG\_LEVEL=INFO
-
-# NOTAM\_API\_KEY=your-api-key-here
-
-# ```
-
-# 
-
-# \## ü§ù Contribuci√≥n
-
-# 
-
-# ¬°Las contribuciones son bienvenidas! Sigue estos pasos:
-
-# 
-
-# 1\. \*\*Fork\*\* el proyecto
-
-# 2\. \*\*Crear\*\* una rama para tu feature (`git checkout -b feature/nueva-caracteristica`)
-
-# 3\. \*\*Commit\*\* tus cambios (`git commit -m 'Agregar nueva caracter√≠stica'`)
-
-# 4\. \*\*Push\*\* a la rama (`git push origin feature/nueva-caracteristica`)
-
-# 5\. \*\*Abrir\*\* un Pull Request
-
-# 
-
-# \### Gu√≠as de Contribuci√≥n
-
-# \- \[üìã C√≥digo de Conducta](docs/contributing/code-of-conduct.md)
-
-# \- \[üîß Gu√≠a de Desarrollo](docs/contributing/development-guide.md)
-
-# \- \[üé® Estilo de C√≥digo](docs/contributing/style-guide.md)
-
-# 
-
-# \## üìù Changelog
-
-# 
-
-# \### v2.0.0 (2024-01-15)
-
-# \- ‚ú® Nueva interfaz de usuario
-
-# \- üöÄ Mejoras de rendimiento
-
-# \- üîß Refactorizaci√≥n completa del parser
-
-# \- üìä Nuevo sistema de reportes
-
-# 
-
-# \### v1.5.0 (2023-12-01)
-
-# \- üîß Correcci√≥n de bugs cr√≠ticos
-
-# \- üìñ Documentaci√≥n actualizada
-
-# \- üß™ Nuevas pruebas unitarias
-
-# 
-
-# \[Ver changelog completo](CHANGELOG.md)
-
-# 
-
-# \## üêõ Reporte de Bugs
-
-# 
-
-# ¬øEncontraste un bug? 
-
-# 1\. Verifica que no est√© ya reportado en \[Issues](https://github.com/isidororeyes/NOTAM/issues)
-
-# 2\. Crea un nuevo issue con:
-
-# &nbsp;  - Descripci√≥n detallada
-
-# &nbsp;  - Pasos para reproducir
-
-# &nbsp;  - Versi√≥n del sistema
-
-# &nbsp;  - Logs de error
-
-# 
-
-# \## üìÑ Licencia
-
-# 
-
-# Este proyecto est√° bajo la Licencia MIT - ver el archivo \[LICENSE](LICENSE) para m√°s detalles.
-
-# 
-
-# \## üë• Equipo
-
-# 
-
-# \- \*\*Isidoro Reyes\*\* - \*Desarrollador Principal\* - \[@isidororeyes](https://github.com/isidororeyes)
-
-# 
-
-# \## üôè Agradecimientos
-
-# 
-
-# \- Organizaci√≥n de Aviaci√≥n Civil Internacional (ICAO)
-
-# \- Administraci√≥n Federal de Aviaci√≥n (FAA)
-
-# \- Comunidad de desarrolladores de aviaci√≥n
-
-# 
-
-# \## üìû Contacto
-
-# 
-
-# \- \*\*GitHub:\*\* \[@isidororeyes](https://github.com/isidororeyes)
-
-# \- \*\*Email:\*\* \[tu-email@ejemplo.com](mailto:tu-email@ejemplo.com)
-
-# \- \*\*Website:\*\* \[tu-website.com](https://tu-website.com)
-
-# 
-
-# ---
-
-# 
-
-# <p align="center">
-
-# &nbsp; <strong>‚≠ê Si este proyecto te ayuda, ¬°dale una estrella! ‚≠ê</strong>
-
-# </p>
-
-# 
-
-# <p align="center">
-
-# &nbsp; Hecho con ‚ù§Ô∏è por Isidoro Reyes
-
-# </p>
-
-
-
+4. **Exportar resultados:**
+   - Clic en "Exportar Reporte"
+   - Elegir ubicaci®Æn y formato
+   - Guardar el archivo
+
+### Uso como API REST
+
+#### 1. Iniciar el servidor API
+
+```bash
+python src/api/routes.py
+```
+
+El servidor estar®¢ disponible en `http://localhost:5000`
+
+#### 2. Endpoints principales
+
+**Procesar NOTAM:**
+```bash
+curl -X POST http://localhost:5000/api/notam/process \
+  -H "Content-Type: application/json" \
+  -d '{"notam_text": "A1234/24 NOTAM..."}'
+```
+
+**Validar NOTAM:**
+```bash
+curl -X POST http://localhost:5000/api/notam/validate \
+  -H "Content-Type: application/json" \
+  -d '{"notam_text": "A1234/24 NOTAM..."}'
+```
+
+**Obtener historial:**
+```bash
+curl http://localhost:5000/api/notam/history
+```
+
+### Ejemplos Pr®¢cticos
+
+#### Ejemplo 1: Procesar NOTAM de aeropuerto espec®™fico
+
+```bash
+# Archivo: madrid_notam.txt
+# Contenido: A1234/24 NOTAM LEMD...
+
+python src/main/app.py --file "madrid_notam.txt" --airport LEMD --format json
+```
+
+#### Ejemplo 2: An®¢lisis de NOTAMs por fecha
+
+```bash
+python src/main/app.py \
+  --directory "notams_enero/" \
+  --date-from 2024-01-01 \
+  --date-to 2024-01-31 \
+  --report \
+  --format pdf
+```
+
+#### Ejemplo 3: Validaci®Æn masiva
+
+```bash
+python src/validators/notam_validator.py \
+  --directory "notams_to_validate/" \
+  --output "validation_report.json" \
+  --strict-mode
+```
+
+## ?? Formatos de Salida
+
+### JSON (Predeterminado)
+```json
+{
+  "notam_id": "A1234/24",
+  "airport": "LEMD",
+  "effective_date": "2024-01-15T00:00:00Z",
+  "expiry_date": "2024-01-20T23:59:59Z",
+  "content": "...",
+  "classification": "A",
+  "status": "ACTIVE"
+}
+```
+
+### Excel (.xlsx)
+- Hoja "Resumen": Estad®™sticas generales
+- Hoja "NOTAMs": Listado detallado
+- Hoja "Errores": Problemas encontrados
+
+### PDF
+- Portada con resumen ejecutivo
+- ®™ndice de contenidos
+- An®¢lisis detallado por aeropuerto
+- Anexos con NOTAMs originales
+
+## ?? Configuraci®Æn Avanzada
+
+### Archivo de configuraci®Æn (config/config.json)
+
+```json
+{
+  "parser": {
+    "strict_mode": true,
+    "validate_dates": true,
+    "max_retries": 3
+  },
+  "database": {
+    "type": "sqlite",
+    "path": "./data/notam.db"
+  },
+  "output": {
+    "format": "json",
+    "pretty_print": true,
+    "include_raw": false
+  }
+}
+```
+
+### Variables de entorno importantes
+
+```bash
+# Configuraci®Æn b®¢sica
+NOTAM_LOG_LEVEL=INFO
+NOTAM_DB_PATH=./data/notam.db
+NOTAM_STRICT_MODE=true
+
+# APIs externas (opcional)
+ICAO_API_KEY=tu-clave-api
+FAA_API_KEY=tu-clave-api
+```
+
+## ?? Pruebas y Validaci®Æn
+
+### Ejecutar pruebas
+
+```bash
+# Todas las pruebas
+pytest tests/
+
+# Pruebas espec®™ficas
+pytest tests/unit/test_parser.py
+
+# Con cobertura
+pytest --cov=src tests/
+```
+
+### Datos de prueba
+
+El proyecto incluye datos de ejemplo en `data/samples/`:
+- `example_notam.txt` - NOTAM b®¢sico de ejemplo
+- `complex_notam.txt` - NOTAM con m®≤ltiples elementos
+- `invalid_notam.txt` - Ejemplo de NOTAM inv®¢lido
+
+## ?? Estructura del Proyecto
+
+```
+NOTAM/
+©¿©§©§ src/                    # C®Ædigo fuente
+©¶   ©¿©§©§ main/              # Aplicaci®Æn principal
+©¶   ©¿©§©§ parsers/           # Analizadores NOTAM
+©¶   ©¿©§©§ validators/        # Validadores
+©¶   ©∏©§©§ utils/             # Utilidades
+©¿©§©§ tests/                 # Pruebas
+©¿©§©§ docs/                  # Documentaci®Æn
+©¿©§©§ data/                  # Datos y ejemplos
+©¿©§©§ config/                # Configuraciones
+©∏©§©§ scripts/               # Scripts de automatizaci®Æn
+```
+
+## ?? Soluci®Æn de Problemas
+
+### Errores Comunes
+
+**Error: "No se puede encontrar el archivo"**
+```bash
+# Verificar que el archivo existe
+ls -la archivo.notam
+# o en Windows:
+dir archivo.notam
+```
+
+**Error: "Formato NOTAM inv®¢lido"**
+```bash
+# Usar validador para diagn®Æstico
+python src/validators/notam_validator.py --file archivo.notam --verbose
+```
+
+**Error: "Dependencias faltantes"**
+```bash
+# Reinstalar dependencias
+pip install -r requirements.txt --force-reinstall
+```
+
+### Logs y Depuraci®Æn
+
+```bash
+# Ejecutar con logs detallados
+python src/main/app.py --file archivo.notam --log-level DEBUG
+
+# Ver logs en archivo
+tail -f logs/notam.log
+```
+
+## ?? Contribuir
+
+?Quieres contribuir al proyecto? ?Genial!
+
+1. Lee la [Gu®™a de Contribuci®Æn](CONTRIBUTING.md)
+2. Fork el repositorio
+3. Crea una rama para tu feature
+4. Env®™a un Pull Request
+
+## ?? Licencia
+
+Este proyecto est®¢ bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para m®¢s detalles.
+
+## ?? Autor
+
+**Isidoro Reyes** - [@isidororeyes](https://github.com/isidororeyes)
+
+## ?? Reconocimientos
+
+- Organizaci®Æn de Aviaci®Æn Civil Internacional (ICAO)
+- Administraci®Æn Federal de Aviaci®Æn (FAA)
+- Comunidad de desarrolladores de aviaci®Æn
+
+## ?? Soporte
+
+?Necesitas ayuda?
+- ?? [Reportar un bug](https://github.com/isidororeyes/NOTAM/issues)
+- ?? [Solicitar una caracter®™stica](https://github.com/isidororeyes/NOTAM/issues)
+- ?? Contacto: [tu-email@ejemplo.com](mailto:tu-email@ejemplo.com)
+
+---
+
+? **?Si este proyecto te ayuda, dale una estrella en GitHub!** ?
