@@ -1,0 +1,384 @@
+# ============================================================================
+# .gitignore para proyecto NOTAM
+# ============================================================================
+
+# Archivos de sistema operativo
+# ============================================================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Archivos temporales de Windows
+# ============================================================================
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+*.lnk
+
+# Archivos de configuración personal/local
+# ============================================================================
+*.local
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+config/local.json
+config/secrets.json
+api_keys.txt
+credentials.json
+
+# Logs y archivos de debug
+# ============================================================================
+*.log
+logs/
+log/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+debug.log
+error.log
+access.log
+
+# Dependencias y paquetes
+# ============================================================================
+node_modules/
+npm-modules/
+vendor/
+packages/
+bower_components/
+.pnpm-store/
+
+# Python
+# ============================================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+.venv/
+pipenv/
+Pipfile.lock
+
+# Java
+# ============================================================================
+*.class
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+target/
+.m2/
+.gradle/
+build/
+gradle/
+gradlew
+gradlew.bat
+
+# JavaScript/Node.js
+# ============================================================================
+.npm
+.eslintcache
+.parcel-cache/
+.next/
+.nuxt/
+dist/
+out/
+.vuepress/dist/
+.serverless/
+
+# IDEs y editores
+# ============================================================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+.metadata/
+.recommenders/
+.eclipse/
+*.sublime-project
+*.sublime-workspace
+
+# Archivos de compilación y build
+# ============================================================================
+build/
+dist/
+out/
+target/
+bin/
+obj/
+Debug/
+Release/
+x64/
+x86/
+
+# Bases de datos
+# ============================================================================
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+*.mdb
+*.accdb
+*.db-shm
+*.db-wal
+
+# Archivos de datos sensibles
+# ============================================================================
+data/private/
+data/sensitive/
+data/personal/
+backup/
+*.backup
+*.bak
+*.old
+*.orig
+*.save
+
+# Archivos específicos del proyecto NOTAM
+# ============================================================================
+# Datos NOTAM reales (mantener solo ejemplos)
+data/notam/*.real
+data/notam/*.live
+data/notam/production/
+
+# Archivos de configuración de aeropuertos reales
+airports/real/
+airports/live/
+
+# Claves API y tokens
+notam_api_key.txt
+faa_api_key.txt
+icao_credentials.json
+
+# Archivos de testing
+# ============================================================================
+.coverage
+.coverage.*
+coverage/
+htmlcov/
+.tox/
+.nox/
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+test-results/
+test-reports/
+
+# Archivos multimedia grandes
+# ============================================================================
+*.mp4
+*.avi
+*.mkv
+*.mov
+*.wmv
+*.flv
+*.webm
+*.m4v
+*.3gp
+*.3g2
+*.mj2
+*.mp3
+*.wav
+*.flac
+*.aac
+*.ogg
+*.wma
+*.m4a
+*.aiff
+*.au
+*.raw
+
+# Archivos de imágenes grandes (mantener solo iconos/logos pequeños)
+# ============================================================================
+*.psd
+*.ai
+*.eps
+*.pdf
+*.tiff
+*.tif
+*.raw
+*.cr2
+*.nef
+*.orf
+*.sr2
+
+# Archivos de documentos grandes
+# ============================================================================
+*.docx
+*.doc
+*.pptx
+*.ppt
+*.xlsx
+*.xls
+*.pages
+*.numbers
+*.key
+
+# Archivos de respaldo y versionado
+# ============================================================================
+*.orig
+*.rej
+*.patch
+*.diff
+.git/
+.svn/
+.hg/
+.bzr/
+
+# Archivos de herramientas de desarrollo
+# ============================================================================
+.sass-cache/
+.cache/
+.temp/
+.tmp/
+.grunt/
+.bower/
+.jspm/
+.fusebox/
+
+# Archivos de certificados (solo desarrollo)
+# ============================================================================
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+*.jks
+*.keystore
+
+# Archivos de configuración específicos del entorno
+# ============================================================================
+.env.production
+.env.staging
+.env.development
+docker-compose.override.yml
+docker-compose.prod.yml
+
+# Archivos de monitoreo y análisis
+# ============================================================================
+.nyc_output/
+coverage/
+reports/
+metrics/
+profiling/
+
+# Archivos específicos de servicios cloud
+# ============================================================================
+.aws/
+.gcp/
+.azure/
+terraform.tfstate
+terraform.tfstate.backup
+.terraform/
+
+# Archivos de documentación generada automáticamente
+# ============================================================================
+docs/generated/
+docs/api/generated/
+docs/build/
+site/
+
+# Archivos de seguridad
+# ============================================================================
+*.pem
+*.key
+*.crt
+*.csr
+*.p12
+*.pfx
+*.jks
+*.keystore
+security/
+secrets/
+
+# Archivos de configuración de servidores
+# ============================================================================
+.htaccess
+.htpasswd
+nginx.conf
+apache2.conf
+server.conf
+
+# Archivos de monitoreo de rendimiento
+# ============================================================================
+*.prof
+*.pprof
+*.trace
+flamegraph.svg
+perf.data*
+
+# Archivos de deployment
+# ============================================================================
+deploy/
+deployment/
+k8s/generated/
+helm/generated/
+
+# Archivos de migración de base de datos
+# ============================================================================
+migrations/backup/
+migrations/rollback/
+
+# Archivos específicos de NOTAM que no deben subirse
+# ============================================================================
+# Datos reales de NOTAMs
+real_notam_data/
+production_notam/
+live_feed/
+
+# Configuraciones específicas de aeropuertos
+airport_configs/sensitive/
+runway_data/classified/
+
+# Archivos de navegación aérea sensibles
+nav_data/restricted/
+approach_charts/restricted/
+
+# Logs de vuelo reales
+flight_logs/
+atc_logs/
+radar_data/
+
+# NOTA: Siempre revisar antes de hacer commit
+# Usar 'git status' para verificar qué archivos se van a subir
