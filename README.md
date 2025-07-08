@@ -1,389 +1,470 @@
-# NOTAM - Sistema de Avisos a Navegantes
+# NOTAM Trading Bot v5.0 - Complete Documentation
 
-[![NOTAM Version](https://img.shields.io/badge/NOTAM-v2.0-blue.svg)](https://github.com/isidororeyes/NOTAM)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![Python](https://img.shields.io/badge/python-3.8%2B-blue.svg)](https://python.org)
-[![Status](https://img.shields.io/badge/status-en%20desarrollo-orange.svg)](https://github.com/isidororeyes/NOTAM)
+> **âš ï¸ IMPORTANT DISCLAIMER**: This bot is for educational and research purposes. Automated trading involves substantial financial risk. Always test thoroughly with paper trading before considering any live implementation.
 
-## ?? Descripci¨®n
+## ğŸ“‹ Overview
 
-NOTAM (Notice to Airmen) es un sistema para la gesti¨®n y procesamiento de avisos a navegantes a¨¦reos. Este proyecto proporciona herramientas para el manejo, an¨¢lisis y distribuci¨®n de informaci¨®n NOTAM cr¨ªtica para la aviaci¨®n civil.
+The NOTAM Trading Bot is an automated system that monitors aviation NOTAMs (Notice to Airmen) for critical airspace closures and automatically executes trading strategies when specific conditions are met. The bot integrates NOTAM monitoring, AI interpretation via ChatGPT, WhatsApp notifications, and automated trading through Interactive Brokers.
 
-## ? Caracter¨ªsticas Principales
+### Key Features
 
-- ? **Procesamiento de mensajes NOTAM** - Analiza NOTAMs en formato ICAO est¨¢ndar
-- ? **Validaci¨®n de formato** - Verifica sintaxis y estructura seg¨²n normas internacionales
-- ? **An¨¢lisis de datos aeron¨¢uticos** - Extrae informaci¨®n de aeropuertos, pistas y servicios
-- ? **Interfaz de usuario intuitiva** - F¨¢cil de usar para profesionales de aviaci¨®n
-- ? **Exportaci¨®n de reportes** - Genera reportes en PDF, Excel y JSON
-- ? **API REST** - Integraci¨®n con sistemas externos
-- ? **B¨²squeda avanzada** - Filtros por fecha, aeropuerto, tipo de NOTAM
+- **Real-time NOTAM monitoring** from FAA sources
+- **AI-powered interpretation** using ChatGPT API for clear explanations
+- **Automatic trading execution** with configurable portfolios
+- **WhatsApp notifications** with detailed alerts and summaries
+- **Multiple trading modes** (Paper/Live trading)
+- **Risk-based portfolios** (Conservative/Moderate/Aggressive)
+- **Comprehensive logging** and event tracking
 
-## ?? Instalaci¨®n R¨¢pida
+## ğŸ—ï¸ System Architecture
 
-### Requisitos del Sistema
-- **Python 3.8 o superior**
-- **Windows 10/11, macOS 10.14+, o Linux Ubuntu 18.04+**
-- **4 GB RAM** (recomendado 8 GB)
-- **2 GB espacio libre en disco**
+```
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚   NOTAM Sources â”‚â”€â”€â”€â–¶â”‚  NOTAM Monitor   â”‚â”€â”€â”€â–¶â”‚   ChatGPT API   â”‚
+â”‚   (FAA/ICAO)    â”‚    â”‚  & Analysis      â”‚    â”‚  (Interpretation)â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜    â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜    â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+                                 â”‚
+                                 â–¼
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚  WhatsApp API   â”‚â—€â”€â”€â”€â”‚  Trading Bot     â”‚â”€â”€â”€â–¶â”‚ Interactive     â”‚
+â”‚  (Notifications)â”‚    â”‚  Core System     â”‚    â”‚ Brokers API     â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜    â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜    â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+```
 
-### Instalaci¨®n Paso a Paso
+## ğŸ› ï¸ Installation & Setup
 
-1. **Clonar el repositorio:**
+### Prerequisites
+
+1. **Python 3.8+** with required packages:
+   ```bash
+   pip install ib_insync requests beautifulsoup4 lxml
+   ```
+
+2. **Interactive Brokers Account** and TWS/Gateway installed
+
+3. **OpenAI API Key** for ChatGPT integration
+
+4. **WhatsApp Integration** (TimelinesAI service)
+
+### Environment Configuration
+
+1. **Set OpenAI API Key:**
+   ```bash
+   export OPENAI_API_KEY="your-openai-api-key"
+   ```
+   Or modify the `OPENAI_API_KEY` variable in the code.
+
+2. **Configure Interactive Brokers:**
+   - Install TWS or IB Gateway
+   - Enable API connections in settings
+   - Configure ports:
+     - Paper trading: 4002
+     - Live trading: 7496
+
+3. **WhatsApp Setup:**
+   - Update `JID` and `NINA` variables with target WhatsApp numbers
+   - Configure TimelinesAI API credentials
+
+## ğŸ“Š Trading Portfolios
+
+### Conservative Portfolio (ğŸŸ¢ Low Risk)
+- **SPY** (S&P 500 ETF) - 2 shares
+- **QQQ** (NASDAQ ETF) - 2 shares  
+- **GLD** (Gold ETF) - 2 shares
+- **TLT** (Treasury Bonds) - 1 share
+
+### Moderate Portfolio (ğŸŸ¡ Medium Risk)
+- **SPY** - 3 shares
+- **QQQ** - 2 shares
+- **GLD** - 3 shares
+- **XOM** (Exxon Mobil) - 5 shares
+- **CVX** (Chevron) - 3 shares
+- **LMT** (Lockheed Martin) - 1 share
+
+### Aggressive Portfolio (ğŸŸ  High Risk)
+- **XLE** (Energy ETF) - 10 shares
+- **XOP** (Oil & Gas ETF) - 5 shares
+- **XOM** - 10 shares
+- **CVX** - 8 shares
+- **LMT** - 3 shares
+- **GLD** - 5 shares
+
+## ğŸš€ Usage Guide
+
+### Basic Commands
+
+#### Start Monitoring (Paper Trading)
 ```bash
-git clone https://github.com/isidororeyes/NOTAM.git
-cd NOTAM
+python notam_trading_bot_complete.py
 ```
 
-2. **Crear entorno virtual:**
+#### Start with Specific Portfolio
 ```bash
-python -m venv venv
+python notam_trading_bot_complete.py --portfolio Aggressive
 ```
 
-3. **Activar entorno virtual:**
+#### Custom Check Interval
 ```bash
-# Windows:
-venv\Scripts\activate
-
-# macOS/Linux:
-source venv/bin/activate
+python notam_trading_bot_complete.py --interval 15
 ```
 
-4. **Instalar dependencias:**
+### Advanced Commands
+
+#### Live Trading Mode âš ï¸
 ```bash
-pip install -r requirements.txt
+python notam_trading_bot_complete.py --live-trading --portfolio Moderate
 ```
+**Warning:** This uses real money! Requires explicit confirmation.
 
-5. **Configurar variables de entorno:**
+#### Paper Trading Mode (Default)
 ```bash
-# Copiar archivo de ejemplo
-copy .env.example .env
-
-# Editar .env con tus configuraciones
-notepad .env
+python notam_trading_bot_complete.py --paper-trading
 ```
 
-6. **Ejecutar la aplicaci¨®n:**
+#### Simulation Mode
 ```bash
-python src/main/app.py
+python notam_trading_bot_complete.py --simulate --portfolio Conservative
 ```
 
-## ??? C¨®mo Usar el Programa
+### Testing & Utilities
 
-### Uso B¨¢sico - L¨ªnea de Comandos
-
-#### 1. Procesar un archivo NOTAM individual
-
+#### Test ChatGPT Integration
 ```bash
-# Analizar un archivo NOTAM
-python src/main/app.py --file "ruta/al/archivo.notam"
-
-# Ejemplo:
-python src/main/app.py --file "data/samples/example_notam.txt"
+python notam_trading_bot_complete.py --test-chatgpt
 ```
 
-#### 2. Procesar m¨²ltiples archivos
-
+#### Test IB Connection
 ```bash
-# Procesar todos los archivos de un directorio
-python src/main/app.py --directory "ruta/al/directorio"
-
-# Ejemplo:
-python src/main/app.py --directory "data/samples/"
+python notam_trading_bot_complete.py --test-ib
 ```
 
-#### 3. Generar reporte completo
-
+#### Show Available Portfolios
 ```bash
-# Generar reporte en PDF
-python src/main/app.py --file "archivo.notam" --report --format pdf
-
-# Generar reporte en Excel
-python src/main/app.py --file "archivo.notam" --report --format xlsx
-
-# Generar reporte en JSON
-python src/main/app.py --file "archivo.notam" --report --format json
+python notam_trading_bot_complete.py --show-portfolios
 ```
 
-#### 4. Validar formato NOTAM
-
+#### Create Sample NOTAM for Testing
 ```bash
-# Solo validar sin procesar
-python src/validators/notam_validator.py --file "archivo.notam"
-
-# Validar con reporte detallado
-python src/validators/notam_validator.py --file "archivo.notam" --verbose
+python notam_trading_bot_complete.py --create-sample
 ```
 
-#### 5. Opciones avanzadas
-
+#### Remove Sample NOTAM
 ```bash
-# Procesar con filtros espec¨ªficos
-python src/main/app.py --file "archivo.notam" --airport LEMD --date-from 2024-01-01
-
-# Procesar en modo estricto
-python src/main/app.py --file "archivo.notam" --strict-mode
-
-# Procesar con salida personalizada
-python src/main/app.py --file "archivo.notam" --output "mi_reporte.json"
+python notam_trading_bot_complete.py --remove-sample
 ```
 
-### Uso Avanzado - Interfaz Gr¨¢fica
+### Cache Management
 
-#### 1. Iniciar la interfaz gr¨¢fica
-
+#### View Interpretation Cache
 ```bash
-python src/ui/main_window.py
+python notam_trading_bot_complete.py --show-cache
 ```
 
-#### 2. Pasos en la interfaz:
-
-1. **Cargar archivo NOTAM:**
-   - Clic en "Abrir Archivo"
-   - Seleccionar archivo .notam o .txt
-   - El contenido se mostrar¨¢ en el panel principal
-
-2. **Configurar opciones:**
-   - Seleccionar modo de validaci¨®n (estricto/flexible)
-   - Elegir formato de salida
-   - Configurar filtros si es necesario
-
-3. **Procesar:**
-   - Clic en "Procesar NOTAM"
-   - Ver resultados en tiempo real
-   - Revisar errores y advertencias
-
-4. **Exportar resultados:**
-   - Clic en "Exportar Reporte"
-   - Elegir ubicaci¨®n y formato
-   - Guardar el archivo
-
-### Uso como API REST
-
-#### 1. Iniciar el servidor API
-
+#### Clear Cache
 ```bash
-python src/api/routes.py
+python notam_trading_bot_complete.py --clear-cache
 ```
 
-El servidor estar¨¢ disponible en `http://localhost:5000`
+## âš™ï¸ Configuration Options
 
-#### 2. Endpoints principales
+### Core Settings
 
-**Procesar NOTAM:**
-```bash
-curl -X POST http://localhost:5000/api/notam/process \
-  -H "Content-Type: application/json" \
-  -d '{"notam_text": "A1234/24 NOTAM..."}'
+| Parameter | Default | Description |
+|-----------|---------|-------------|
+| `FIR` | "OIIX" | Flight Information Region (Iran) |
+| `IB_HOST` | "127.0.0.1" | Interactive Brokers host |
+| `IB_PORT` | 4002 | IB port (4002=paper, 7496=live) |
+| `CLIENT_ID` | 1 | IB client identifier |
+
+### Trigger Keywords
+
+The system monitors for these critical keywords in NOTAMs:
+- AIRSPACE CLOSED
+- ALL FLIGHTS PROHIBITED  
+- NO FLIGHT PERMITTED
+- AIRSPACE IS RESTRICTED
+- MILITARY EXERCISE
+- CONFLICT ZONE
+- DANGER AREA
+- RESTRICTED AREA
+- NO OVERFLIGHT
+- PROHIBITED AREA
+
+### Alert Criteria
+
+A NOTAM triggers trading when:
+1. **Contains trigger keywords** (airspace closure indicators)
+2. **Is recent** (issued within last 5 minutes)
+3. **Affects monitored FIR** (OIIX - Iran region)
+
+## ğŸ“± WhatsApp Notifications
+
+### Alert Message Format
+```
+ğŸš¨ CRITICAL NOTAM ALERT - TRADING ACTIVATED ğŸš¨
+
+ğŸ“ FIR: OIIX (Iran)
+ğŸ†” ID: A1234/24
+
+â° VALIDITY:
+ğŸ“… Start: 15 Jan 2025 - 14:30 UTC
+ğŸ“… End: 15 Jan 2025 - 18:30 UTC
+â±ï¸ Duration: 4h 0m
+
+ğŸ“‹ ORIGINAL CONTENT:
+AIRSPACE CLOSED DUE TO MILITARY EXERCISE...
+
+ğŸ¤– AUTOMATIC INTERPRETATION:
+[ChatGPT explanation in clear language]
+
+ğŸ¤– AUTOMATIC ACTION:
+âœ… Alert detected
+ğŸ”„ Starting automatic trading
+ğŸŸ¢ Portfolio: Conservative
+ğŸ’° Executing specialized orders
 ```
 
-**Validar NOTAM:**
-```bash
-curl -X POST http://localhost:5000/api/notam/validate \
-  -H "Content-Type: application/json" \
-  -d '{"notam_text": "A1234/24 NOTAM..."}'
+### Trading Summary Format
+```
+ğŸ“Š AUTOMATIC TRADING SUMMARY ğŸ“Š
+
+ğŸš¨ Triggered by: CRITICAL NOTAM ALERT
+ğŸŸ¡ MODERATE
+
+âœ… SUCCESSFUL: 4
+SPY, QQQ, GLD, XOM
+
+âŒ FAILED: 1
+CVX
+
+ğŸ’° TOTAL INVESTED: $1,247.50
+âš¡ EXECUTION TIME: 3.45s
+
+â° Completed: 14:32:15
+ğŸ¤– NOTAM-Trading Bot v5.0 COMPLETE
 ```
 
-**Obtener historial:**
-```bash
-curl http://localhost:5000/api/notam/history
-```
+## ğŸ¤– AI Integration (ChatGPT)
 
-### Ejemplos Pr¨¢cticos
+### Features
+- **Automatic interpretation** of complex NOTAMs
+- **Plain language explanations** for non-aviation experts
+- **Caching system** to avoid duplicate API calls
+- **Structured analysis** including severity assessment
 
-#### Ejemplo 1: Procesar NOTAM de aeropuerto espec¨ªfico
+### Interpretation Format
+- **WHAT'S HAPPENING**: Clear explanation
+- **WHERE**: Specific location affected  
+- **WHEN**: Valid dates and times
+- **IMPACT**: Effect on flights and operations
+- **SEVERITY**: Risk level (Low/Medium/High/Critical)
 
-```bash
-# Archivo: madrid_notam.txt
-# Contenido: A1234/24 NOTAM LEMD...
+## ğŸ“ˆ Trading Logic
 
-python src/main/app.py --file "madrid_notam.txt" --airport LEMD --format json
-```
+### Execution Flow
+1. **NOTAM Detection** â†’ Critical alert identified
+2. **AI Interpretation** â†’ ChatGPT analyzes content
+3. **WhatsApp Alert** â†’ Immediate notification sent
+4. **Trading Delay** â†’ Strategic delay (5-10s based on portfolio)
+5. **IB Connection** â†’ Connect to broker
+6. **Order Execution** â†’ Buy orders for portfolio assets
+7. **Monitoring** â†’ Track order status (30s timeout)
+8. **Summary Report** â†’ Results sent via WhatsApp
 
-#### Ejemplo 2: An¨¢lisis de NOTAMs por fecha
+### Risk Management
+- **Paper trading default** for safety
+- **Explicit confirmation** required for live trading
+- **Position limits** defined per portfolio
+- **Timeout protection** on order execution
+- **Comprehensive logging** of all activities
 
-```bash
-python src/main/app.py \
-  --directory "notams_enero/" \
-  --date-from 2024-01-01 \
-  --date-to 2024-01-31 \
-  --report \
-  --format pdf
-```
-
-#### Ejemplo 3: Validaci¨®n masiva
-
-```bash
-python src/validators/notam_validator.py \
-  --directory "notams_to_validate/" \
-  --output "validation_report.json" \
-  --strict-mode
-```
-
-## ?? Formatos de Salida
-
-### JSON (Predeterminado)
-```json
-{
-  "notam_id": "A1234/24",
-  "airport": "LEMD",
-  "effective_date": "2024-01-15T00:00:00Z",
-  "expiry_date": "2024-01-20T23:59:59Z",
-  "content": "...",
-  "classification": "A",
-  "status": "ACTIVE"
-}
-```
-
-### Excel (.xlsx)
-- Hoja "Resumen": Estad¨ªsticas generales
-- Hoja "NOTAMs": Listado detallado
-- Hoja "Errores": Problemas encontrados
-
-### PDF
-- Portada con resumen ejecutivo
-- ¨ªndice de contenidos
-- An¨¢lisis detallado por aeropuerto
-- Anexos con NOTAMs originales
-
-## ?? Configuraci¨®n Avanzada
-
-### Archivo de configuraci¨®n (config/config.json)
-
-```json
-{
-  "parser": {
-    "strict_mode": true,
-    "validate_dates": true,
-    "max_retries": 3
-  },
-  "database": {
-    "type": "sqlite",
-    "path": "./data/notam.db"
-  },
-  "output": {
-    "format": "json",
-    "pretty_print": true,
-    "include_raw": false
-  }
-}
-```
-
-### Variables de entorno importantes
-
-```bash
-# Configuraci¨®n b¨¢sica
-NOTAM_LOG_LEVEL=INFO
-NOTAM_DB_PATH=./data/notam.db
-NOTAM_STRICT_MODE=true
-
-# APIs externas (opcional)
-ICAO_API_KEY=tu-clave-api
-FAA_API_KEY=tu-clave-api
-```
-
-## ?? Pruebas y Validaci¨®n
-
-### Ejecutar pruebas
-
-```bash
-# Todas las pruebas
-pytest tests/
-
-# Pruebas espec¨ªficas
-pytest tests/unit/test_parser.py
-
-# Con cobertura
-pytest --cov=src tests/
-```
-
-### Datos de prueba
-
-El proyecto incluye datos de ejemplo en `data/samples/`:
-- `example_notam.txt` - NOTAM b¨¢sico de ejemplo
-- `complex_notam.txt` - NOTAM con m¨²ltiples elementos
-- `invalid_notam.txt` - Ejemplo de NOTAM inv¨¢lido
-
-## ?? Estructura del Proyecto
+## ğŸ“ File Structure
 
 ```
-NOTAM/
-©À©¤©¤ src/                    # C¨®digo fuente
-©¦   ©À©¤©¤ main/              # Aplicaci¨®n principal
-©¦   ©À©¤©¤ parsers/           # Analizadores NOTAM
-©¦   ©À©¤©¤ validators/        # Validadores
-©¦   ©¸©¤©¤ utils/             # Utilidades
-©À©¤©¤ tests/                 # Pruebas
-©À©¤©¤ docs/                  # Documentaci¨®n
-©À©¤©¤ data/                  # Datos y ejemplos
-©À©¤©¤ config/                # Configuraciones
-©¸©¤©¤ scripts/               # Scripts de automatizaci¨®n
+notam_trading_bot/
+â”œâ”€â”€ notam_trading_bot_complete.py    # Main bot script
+â”œâ”€â”€ notam_trading_events.log         # Trading events log
+â”œâ”€â”€ notam_trading_bot.log           # General application log
+â”œâ”€â”€ sample_notam.txt                # Optional test NOTAM file
+â””â”€â”€ README.md                       # This documentation
 ```
 
-## ?? Soluci¨®n de Problemas
+## ğŸ“ Logging & Monitoring
 
-### Errores Comunes
+### Log Files
 
-**Error: "No se puede encontrar el archivo"**
-```bash
-# Verificar que el archivo existe
-ls -la archivo.notam
-# o en Windows:
-dir archivo.notam
+#### `notam_trading_events.log`
+Records all trading events:
+```
+[2025-01-15 14:30:25 UTC] NOTAM_CRITICAL | SUCCESS | Portfolio: Moderate | ID: A1234/24
+[2025-01-15 14:30:45 UTC] TRADING_EXECUTED | SUCCESS | Portfolio: Moderate | Successful: 4, Failed: 1
 ```
 
-**Error: "Formato NOTAM inv¨¢lido"**
-```bash
-# Usar validador para diagn¨®stico
-python src/validators/notam_validator.py --file archivo.notam --verbose
-```
+#### `notam_trading_bot.log`  
+Detailed application logs with timestamps and debug information.
 
-**Error: "Dependencias faltantes"**
-```bash
-# Reinstalar dependencias
-pip install -r requirements.txt --force-reinstall
-```
+### Console Output
+Real-time status updates with emojis:
+- â„¹ï¸ **INFO**: General information
+- âœ… **OK**: Successful operations
+- âš ï¸ **WARNING**: Important notices
+- âŒ **ERROR**: Error conditions
 
-### Logs y Depuraci¨®n
+## ğŸ”’ Security Considerations
 
-```bash
-# Ejecutar con logs detallados
-python src/main/app.py --file archivo.notam --log-level DEBUG
+### API Keys
+- Store OpenAI API key in environment variables
+- Never commit API keys to version control
+- Use separate keys for development/production
 
-# Ver logs en archivo
-tail -f logs/notam.log
-```
+### Trading Safety
+- **Always test with paper trading first**
+- Set appropriate position limits
+- Monitor account balance and buying power
+- Keep separate accounts for automated trading
 
-## ?? Contribuir
+### Network Security
+- Use secure connections for all API calls
+- Implement proper timeout handling
+- Monitor for unusual activity patterns
 
-?Quieres contribuir al proyecto? ?Genial!
+## ğŸš¨ Error Handling
 
-1. Lee la [Gu¨ªa de Contribuci¨®n](CONTRIBUTING.md)
-2. Fork el repositorio
-3. Crea una rama para tu feature
-4. Env¨ªa un Pull Request
+### Common Issues & Solutions
 
-## ?? Licencia
+#### "Could not connect to IB Gateway"
+- Ensure TWS or IB Gateway is running
+- Check port configuration (4002/7496)
+- Verify API settings are enabled
+- Confirm client ID is unique
 
-Este proyecto est¨¢ bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para m¨¢s detalles.
+#### "ChatGPT interpretation failed"
+- Verify OpenAI API key is valid
+- Check internet connection
+- Monitor API usage limits
+- Review error messages in logs
 
-## ?? Autor
+#### "WhatsApp notification failed"
+- Verify TimelinesAI credentials
+- Check WhatsApp number format
+- Test with simplified message
+- Review API endpoint status
 
-**Isidoro Reyes** - [@isidororeyes](https://github.com/isidororeyes)
+#### "No NOTAMs obtained"
+- Check internet connectivity
+- Verify FAA website accessibility
+- Review FIR configuration
+- Test with sample NOTAM file
 
-## ?? Reconocimientos
+## ğŸ“Š Performance Metrics
 
-- Organizaci¨®n de Aviaci¨®n Civil Internacional (ICAO)
-- Administraci¨®n Federal de Aviaci¨®n (FAA)
-- Comunidad de desarrolladores de aviaci¨®n
+### Typical Response Times
+- **NOTAM Detection**: 1-3 seconds
+- **ChatGPT Interpretation**: 2-5 seconds  
+- **WhatsApp Notification**: 1-2 seconds
+- **Trading Execution**: 3-8 seconds
+- **Total Alert-to-Trade**: 10-20 seconds
 
-## ?? Soporte
+### Resource Usage
+- **Memory**: ~50-100 MB
+- **CPU**: Low (periodic checks)
+- **Network**: Moderate (API calls)
+- **Storage**: Minimal (logs only)
 
-?Necesitas ayuda?
-- ?? [Reportar un bug](https://github.com/isidororeyes/NOTAM/issues)
-- ?? [Solicitar una caracter¨ªstica](https://github.com/isidororeyes/NOTAM/issues)
-- ?? Contacto: [tu-email@ejemplo.com](mailto:tu-email@ejemplo.com)
+## ğŸ”„ Maintenance
+
+### Regular Tasks
+- Monitor log file sizes
+- Clear interpretation cache periodically
+- Update trigger keywords as needed
+- Review and adjust portfolios
+- Test API connections weekly
+
+### Updates
+- Check for new NOTAM data sources
+- Update trading strategies based on performance
+- Enhance error handling based on logs
+- Optimize ChatGPT prompts for better interpretations
+
+## âš ï¸ Disclaimers
+
+1. **Financial Risk**: Automated trading involves substantial risk of loss
+2. **Testing Required**: Always test thoroughly before live trading
+3. **Market Volatility**: Rapid market movements may affect execution
+4. **API Limitations**: External services may have rate limits or downtime
+5. **Aviation Data**: NOTAM interpretation may not be 100% accurate
+
+## ğŸ“ Support
+
+For technical issues:
+1. Check logs for error details
+2. Test individual components (IB, ChatGPT, WhatsApp)
+3. Review configuration settings
+4. Use simulation mode for debugging
+5. Monitor system resources and connectivity
+
+## ğŸ“ˆ Future Enhancements
+
+- Multiple FIR monitoring
+- Advanced risk management rules
+- Machine learning for NOTAM classification
+- Real-time portfolio optimization
+- Enhanced reporting and analytics
+- Mobile app integration
 
 ---
 
-? **?Si este proyecto te ayuda, dale una estrella en GitHub!** ?
+## ğŸ“‹ Quick Start Checklist
+
+### For Your Friends - Getting Started:
+
+**Step 1: Prerequisites**
+- [ ] Python 3.8+ installed
+- [ ] Interactive Brokers account (paper trading recommended)
+- [ ] OpenAI API key for ChatGPT
+- [ ] Basic understanding of trading risks
+
+**Step 2: Installation**
+```bash
+pip install ib_insync requests beautifulsoup4 lxml
+export OPENAI_API_KEY="your-key-here"
+```
+
+**Step 3: First Test**
+```bash
+# Test everything works
+python notam_trading_bot_complete.py --simulate --portfolio Conservative
+
+# Test real monitoring (paper trading only)
+python notam_trading_bot_complete.py --paper-trading --portfolio Conservative
+```
+
+**Step 4: Understand the System**
+- Review the portfolios section
+- Test with sample NOTAMs first
+- Monitor logs carefully
+- Never use live trading without extensive testing
+
+---
+
+## ğŸ¤ Sharing Instructions
+
+**To share this bot safely:**
+
+1. **Always emphasize the risks** - this involves real money
+2. **Recommend starting with simulation mode** only
+3. **Suggest paper trading** for at least several weeks
+4. **Provide this documentation** in full
+5. **Recommend independent testing** and verification
+6. **Stress the importance** of understanding the code before use
+
+**For Questions:**
+- Review the documentation thoroughly
+- Test each component individually  
+- Start with conservative settings
+- Monitor all operations closely
+- Never invest more than you can afford to lose
+
+---
+
+*Generated: January 2025 - Version 5.0*
